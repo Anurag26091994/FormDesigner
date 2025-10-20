@@ -61,7 +61,8 @@ public class EventService {
                 }
 
                 if (eventType.toString().isEmpty()) {
-                    return "Event type is required.";
+                    response = "Event type is empty, cannot process event.";
+                    return response;
                 }
             } else {
                 response = "Flag is false, event not processed.";
