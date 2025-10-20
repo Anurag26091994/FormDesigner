@@ -1,6 +1,7 @@
 package com.FormDesigner.controller;
 
 import com.FormDesigner.DTOs.EventRequest;
+import com.FormDesigner.logger.FormLogger;
 import com.FormDesigner.service.serviceimpl.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,15 @@ public class EventController {
 
     @PostMapping("/trigger")
     public ResponseEntity<String> triggerEvent(@RequestBody EventRequest data) {
-        String response = eventService.processEvent(data.getEventName(), data.getEventType(),
-                data.getData(), data.getFlag());
-        return ResponseEntity.ok(response);
+        FormLogger.info("EventController: triggerEvent called with eventName: " + data.getEventName() +
+                ", eventType: " + data.getEventType() + ", flag: " + data.getFlag());
+        try {
+            String response = eventService.processEvent(data.getEventName(), data.getEventType(),
+                    data.getData(), data.getFlag());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            FormLogger.error("EventController: Error in triggerEvent - " + e.getMessage());
+            return ResponseEntity.status(500).body("Error processing event: " + e.getMessage());
+        }
     }
 }
