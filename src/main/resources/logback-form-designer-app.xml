@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- ========================= -->
+    <!-- Console Appender (for debugging) -->
+    <!-- ========================= -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [FORM_DESIGNER_APP] %-5level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================= -->
+    <!-- Email Service Logs -->
+    <!-- ========================= -->
+    <appender name="EMAIL_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>D:/Project/FormDesigner/LOGS/email.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:/Project/FormDesigner/LOGS/email-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [FORM_DESIGNER_APP] %-5level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================= -->
+    <!-- Form Save / Submit Logs -->
+    <!-- ========================= -->
+    <appender name="FORM_OPERATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>D:/Project/FormDesigner/LOGS/formOperations.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:/Project/FormDesigner/LOGS/formOperations-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [FORM_DESIGNER_APP] %-5level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================= -->
+    <!-- Main Application Logs -->
+    <!-- ========================= -->
+    <appender name="FORM_DESIGNER_APP" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>D:/Project/FormDesigner/LOGS/FORM_DESIGNER_APP.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:/Project/FormDesigner/LOGS/FORM_DESIGNER_APP-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [FORM_DESIGNER_APP] %-5level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================= -->
+    <!-- Hibernate SQL Logs -->
+    <!-- ========================= -->
+    <appender name="HIBERNATE_SQL_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>D:/Project/FormDesigner/LOGS/hibernateSQL.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:/Project/FormDesigner/LOGS/hibernateSQL-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [FORM_DESIGNER_APP] %-5level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ========================= -->
+    <!-- Specific Loggers -->
+    <!-- ========================= -->
+
+    <!-- Hibernate SQL -->
+    <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+        <appender-ref ref="HIBERNATE_SQL_LOG"/>
+    </logger>
+
+    <!-- Email Service -->
+    <logger name="com.FormDesigner.service.serviceimpl.EmailService" level="INFO" additivity="false">
+        <appender-ref ref="EMAIL_LOG"/>
+    </logger>
+
+    <!-- Form Operation Service (form save, update, publish, etc.) -->
+    <logger name="com.FormDesigner.service.serviceimpl.FormOperationService" level="INFO" additivity="false">
+        <appender-ref ref="FORM_OPERATION_LOG"/>
+    </logger>
+
+    <!-- Default App Logger -->
+    <logger name="com.FormDesigner" level="INFO" additivity="false">
+        <appender-ref ref="FORM_DESIGNER_APP"/>
+    </logger>
+
+    <!-- ========================= -->
+    <!-- Root Logger -->
+    <!-- ========================= -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FORM_DESIGNER_APP"/>
+    </root>
+
+</configuration>
